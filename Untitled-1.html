@@ -1,0 +1,135 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Cátedra Siliano</title>
+<link rel="stylesheet" href="/styles.css" />
+</head>
+<body>
+<header class="topbar">
+<div class="brand">
+<span class="logo">CS</span>
+<h1>Cátedra Siliano</h1>
+</div>
+<input id="buscador" class="search" type="search" placeholder="Buscar temas, categorías o videos..." />
+</header>
+
+
+<main class="layout">
+<aside class="side">
+<h2>Temas</h2>
+<nav id="lista-temas" class="temas"></nav>
+</aside>
+
+
+<section id="contenido" class="content">
+<article class="welcome">
+<h2>Bienvenid@</h2>
+<p>Explorá los temas de la cátedra. Usá el buscador o elegí por categoría.</p>
+</article>
+</section>
+</main>
+
+
+<footer class="foot">
+<small>© <span id="anio"></span> Cátedra Siliano • Sitio educativo</small>
+</footer>
+
+
+<script src="/app.js" defer></script>
+</body>
+</html>
+
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>Admin — Cátedra Siliano</title>
+<link rel="stylesheet" href="/styles.css" />
+<style>
+.admin{max-width:980px;margin:2rem auto;background:var(--card);border:1px solid #242938;border-radius:14px;padding:1rem}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:1rem}
+label{display:block;font-weight:600;margin:.25rem 0}
+input,textarea,select{width:100%;background:#121723;border:1px solid #273045;border-radius:10px;color:var(--txt);padding:.6rem}
+textarea{min-height:160px}
+.row{margin:.5rem 0}
+button{background:linear-gradient(90deg,var(--pri),var(--pri-2));color:#0b0f14;font-weight:700;border:none;padding:.7rem 1rem;border-radius:10px;cursor:pointer}
+.muted{color:var(--sub);font-size:.9rem}
+</style>
+</head>
+<body>
+<header class="topbar"><div class="brand"><span class="logo">CS</span><h1>Panel — Cátedra Siliano</h1></div></header>
+<main class="admin">
+<p class="muted">Este panel guarda archivos JSON e imágenes en la carpeta <code>/contenido</code> del servidor.</p>
+<form id="formTema" enctype="multipart/form-data">
+<div class="grid">
+<div class="row">
+<label>Título</label>
+<input name="titulo" required />
+</div>
+<div class="row">
+<label>Slug (opcional)</label>
+<input name="slug" placeholder="se genera automáticamente" />
+</div>
+<div class="row">
+<label>Categoría</label>
+<input name="categoria" placeholder="Ej: Unidad 1, Teoría, Práctica" />
+</div>
+<div class="row">
+<label>Fecha</label>
+<input name="fecha" type="date" />
+</div>
+</div>
+
+
+<div class="row">
+<label>Descripción breve</label>
+<textarea name="descripcion" placeholder="Resumen del tema"></textarea>
+</div>
+<div class="row">
+<label>Cuerpo (Markdown o texto)</label>
+<textarea name="cuerpo" placeholder="# Encabezado\nContenido con **negrita**, *itálicas* y [enlaces](https://...)"></textarea>
+</div>
+
+
+<div class="row">
+<label>Links a videos (separados por coma)</label>
+<input name="videos" placeholder="https://youtube.com/..., https://vimeo.com/..." />
+</div>
+
+
+<div class="row">
+<label>Imágenes (podés subir varias)</label>
+<input name="imagenes" type="file" accept="image/*" multiple />
+</div>
+
+
+<div class="row">
+<button type="submit">Guardar tema</button>
+</div>
+<p id="msg" class="muted"></p>
+</form>
+</main>
+
+
+<script>
+const form = document.getElementById('formTema');
+const msg = document.getElementById('msg');
+form.addEventListener('submit', async (e)=>{
+e.preventDefault();
+msg.textContent = 'Guardando...';
+const fd = new FormData(form);
+const res = await fetch('/api/temas', { method: 'POST', body: fd });
+const data = await res.json();
+if(data.ok){
+msg.textContent = `Guardado ✔ Tema: ${data.tema.titulo} (/${data.tema.slug})`;
+form.reset();
+} else {
+msg.textContent = 'Error: ' + (data.error || 'no se pudo guardar');
+}
+});
+</script>
+</body>
+</html>

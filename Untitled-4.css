@@ -1,0 +1,27 @@
+:root{
+--bg:#0f1115; --muted:#1a1d25; --card:#141823; --txt:#e5e7eb; --sub:#9aa3b2; --pri:#5ee1a0; --pri-2:#8ae8bd;
+}
+*{box-sizing:border-box}
+body{margin:0;font-family:Inter,system-ui,Segoe UI,Roboto,Arial,sans-serif;background:var(--bg);color:var(--txt)}
+.topbar{position:sticky;top:0;z-index:10;display:flex;gap:1rem;align-items:center;justify-content:space-between;padding:1rem 1.25rem;background:linear-gradient(180deg,#0f1115,rgba(15,17,21,.7));backdrop-filter:blur(6px);border-bottom:1px solid #222}
+.brand{display:flex;align-items:center;gap:.75rem}
+.logo{display:inline-grid;place-items:center;width:38px;height:38px;border-radius:10px;background:radial-gradient(circle at 30% 20%, var(--pri), var(--pri-2));color:#0b0f14;font-weight:800}
+h1{font-size:1.15rem;margin:0}
+.search{flex:1;max-width:420px;background:var(--muted);border:1px solid #262a35;color:var(--txt);padding:.65rem .8rem;border-radius:10px}
+.layout{display:grid;grid-template-columns:260px 1fr;gap:1rem;padding:1rem;min-height:calc(100dvh - 110px)}
+.side{background:var(--card);border:1px solid #242938;border-radius:14px;padding:1rem;overflow:auto}
+.side h2{margin-top:0;font-size:1rem;color:var(--pri)}
+.temas{display:flex;flex-direction:column;gap:.5rem}
+.temas a{display:block;padding:.6rem .7rem;border-radius:10px;background:#151a25;border:1px solid #242938;color:var(--txt);text-decoration:none}
+.temas a:hover{border-color:#2f3a53;background:#171d2b}
+.content{background:var(--card);border:1px solid #242938;border-radius:14px;padding:1rem;overflow:auto}
+.welcome{opacity:.9}
+article h2{margin:.2rem 0 .5rem}
+article .meta{color:var(--sub);font-size:.9rem;margin-bottom:.6rem}
+.gallery{display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:.5rem;margin:.75rem 0}
+.gallery img{width:100%;height:140px;object-fit:cover;border-radius:10px;border:1px solid #273045}
+.badge{display:inline-block;padding:.2rem .5rem;border-radius:8px;background:#1a2130;border:1px solid #2a3550;color:var(--pri);font-size:.8rem}
+.video-list{display:flex;flex-wrap:wrap;gap:.5rem}
+.video-list a{color:var(--pri)}
+.foot{padding:1rem;text-align:center;color:var(--sub)}
+@media (max-width:860px){.layout{grid-template-columns:1fr}.side{order:2}.content{order:1}}
